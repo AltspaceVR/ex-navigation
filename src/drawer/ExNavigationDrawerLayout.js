@@ -44,7 +44,7 @@ export default class ExNavigationDrawerLayout extends React.Component {
         drawerBackgroundColor={this.props.drawerBackgroundColor}
         drawerWidth={this.props.width}
         drawerPosition={DrawerLayout.positions[position]}
-        renderNavigationView={this.props.renderNavigationView || this._renderNavigationView}>
+        renderNavigationView={() => (this.props.renderNavigationView || this._renderNavigationView)(this._renderDrawerItems, this.props)}>
         {this.props.children}
       </DrawerLayout>
     );
