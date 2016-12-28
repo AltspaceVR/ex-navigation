@@ -26,10 +26,6 @@ import { createNavigatorComponent } from '../ExNavigationComponents';
 
 import type ExNavigationContext from '../ExNavigationContext';
 
-const TabViewPagerComponent = Platform.OS === 'ios' ?
-  TabViewPagerScroll :
-  TabViewPagerAndroid;
-
 // TODO: Fill this in
 type SlidingTabItem = {
   id: string,
@@ -192,11 +188,15 @@ class ExNavigationSlidingTab extends PureComponent<any, Props, State> {
         renderHeader={this.props.renderHeader || (this.props.position !== 'bottom' ? this._renderTabBar : undefined)}
         renderFooter={this.props.renderFooter || (this.props.position === 'bottom' ? this._renderTabBar : undefined)}
         onRequestChangeTab={this._setActiveTab}
+        configureTransition={this.props.swipeEnabled === false ? (() => false) : undefined}
       />
     );
   }
 
   _renderPager = (props) => {
+    const TabViewPagerComponent = this.props.swipeEnabled === false || Platform.OS === 'ios' ?
+      TabViewPagerScroll :
+      TabViewPagerAndroid;
     return (
       <TabViewPagerComponent
         {...props}
